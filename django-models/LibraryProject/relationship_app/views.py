@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.decorators import permission_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .models import Book, Library
-
+from .models import Library
+from .models import Book
 
 def list_books(request):
     """
