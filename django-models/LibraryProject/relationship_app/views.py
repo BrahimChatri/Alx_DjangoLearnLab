@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -20,14 +20,14 @@ def list_books(request):
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
 
-class LibraryDetailView(View):
+class LibraryDetailView(DetailView):
     """
     Class-based view to display details of a specific library.
     """
-    def get(self, request, *args, **kwargs):
-        library_id = kwargs.get('library_id')
-        library = get_object_or_404(Library, pk=library_id)
-        return render(request, 'relationship_app/library_detail.html', {'library': library})
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
+    pk_url_kwarg = 'library_id'
 
 
 class CustomLoginView(LoginView):
@@ -41,15 +41,16 @@ class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
 
-class RegisterView(CreateView):
-    form_class = UserCreationForm
-    template_name = 'relationship_app/register.html'
-    success_url = reverse_lazy('login')
-    
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, self.object)
-        return response
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('list_books')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 
 # Helper functions for role checking
