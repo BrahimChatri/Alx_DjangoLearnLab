@@ -6,7 +6,8 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseForbidden
 from .models import Book
-from .forms import BookForm, ExampleForm
+from .forms import BookForm
+from .forms import ExampleForm
 
 # Function-based views with permission decorators
 
