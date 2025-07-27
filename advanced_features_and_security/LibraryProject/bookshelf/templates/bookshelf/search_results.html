@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Search Results</h1>
+  <p>Results for "{{ query|escape }}":</p>
+  
+  <ul>
+  {% for book in books %}
+    <li>{{ book.title|escape }} by {{ book.author|escape }} ({{ book.publication_year }})</li>
+  {% empty %}
+    <li>No books found matching your search.</li>
+  {% endfor %}
+  </ul>
+  
+  <a href="{% url 'search_form' %}">Search again</a>
+{% endblock %}
