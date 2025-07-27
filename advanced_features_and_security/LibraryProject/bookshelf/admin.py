@@ -3,7 +3,6 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Book
 
 # Custom User Admin
-@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     """
     Admin interface for the custom user model.
@@ -54,3 +53,6 @@ class BookAdmin(admin.ModelAdmin):
     
     def has_delete_permission(self, request, obj=None):
         return request.user.has_perm('bookshelf.can_delete')
+
+# Register the CustomUser with CustomUserAdmin
+admin.site.register(CustomUser, CustomUserAdmin)

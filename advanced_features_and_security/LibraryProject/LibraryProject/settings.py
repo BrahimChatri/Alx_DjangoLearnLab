@@ -139,6 +139,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # DEBUG = False  # Set to False in production
 
 # HTTPS and Security Headers Configuration
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # These settings enhance security when HTTPS is configured
 
 # For production, uncomment these settings:

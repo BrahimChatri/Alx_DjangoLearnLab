@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseForbidden
 from .models import Book
-from .forms import BookForm
+from .forms import BookForm, ExampleForm
 
 # Function-based views with permission decorators
 
@@ -152,3 +152,24 @@ def secure_view(request):
         })
     
     return render(request, 'bookshelf/search_form.html')
+
+@login_required
+def example_form_view(request):
+    """
+    Example view demonstrating secure form handling.
+    """
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form data securely
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            
+            # In a real application, you might save to database or send email
+            messages.success(request, f'Thank you {name}! Your message has been received.')
+            return redirect('example_form')
+    else:
+        form = ExampleForm()
+    
+    return render(request, 'bookshelf/form_example.html', {'form': form})

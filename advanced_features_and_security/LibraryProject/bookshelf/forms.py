@@ -115,3 +115,56 @@ class SearchForm(forms.Form):
             if not re.match(r'^[A-Za-z0-9\s\.\-_,]+$', search):
                 raise forms.ValidationError("Search query contains invalid characters.")
         return search
+
+class ExampleForm(forms.Form):
+    """
+    Example form with proper validation and security measures.
+    """
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your name',
+            'required': True
+        })
+    )
+    
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your email',
+            'required': True
+        })
+    )
+    
+    message = forms.CharField(
+        max_length=500,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 4,
+            'placeholder': 'Enter your message',
+            'required': True
+        })
+    )
+    
+    def clean_name(self):
+        """Validate and sanitize name input"""
+        name = self.cleaned_data.get('name')
+        if name:
+            name = name.strip()
+            if len(name) < 2:
+                raise forms.ValidationError("Name must be at least 2 characters long.")
+            # Allow only letters, spaces, and basic punctuation
+            import re
+            if not re.match(r'^[A-Za-z\s\.\-]+$', name):
+                raise forms.ValidationError("Name contains invalid characters.")
+        return name
+    
+    def clean_message(self):
+        """Validate and sanitize message input"""
+        message = self.cleaned_data.get('message')
+        if message:
+            message = message.strip()
+            if len(message) < 10:
+                raise forms.ValidationError("Message must be at least 10 characters long.")
+        return message
