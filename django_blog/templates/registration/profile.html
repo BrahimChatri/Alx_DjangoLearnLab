@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Django Blog{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-container">
+        <h1>User Profile</h1>
+        
+        <div class="profile-info">
+            <h2>{{ user.username }}'s Profile</h2>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name|default:"Not provided" }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name|default:"Not provided" }}</p>
+            <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+        </div>
+        
+        <div class="profile-edit">
+            <h3>Edit Profile</h3>
+            <form method="post">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                    <div class="message error">
+                        <p>Please correct the errors below:</p>
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                    {{ form.first_name }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                    {{ form.last_name }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email:</label>
+                    {{ form.email }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+        
+        <div class="user-posts">
+            <h3>Your Posts</h3>
+            {% if user_posts %}
+                <div class="posts-grid">
+                    {% for post in user_posts %}
+                        <article class="post-card">
+                            <h4><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h4>
+                            <p class="post-meta">Published on {{ post.published_date|date:"F j, Y" }}</p>
+                            <div class="post-actions">
+                                <a href="{% url 'blog:post_update' post.pk %}" class="btn btn-secondary">Edit</a>
+                                <a href="{% url 'blog:post_delete' post.pk %}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>You haven't created any posts yet. <a href="{% url 'blog:post_create' %}">Create your first post!</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

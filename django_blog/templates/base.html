@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Blog{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <h1><a href="{% url 'blog:home' %}">Django Blog</a></h1>
+                <ul class="nav-links">
+                    <li><a href="{% url 'blog:home' %}">Home</a></li>
+                    <li><a href="{% url 'blog:post_list' %}">Posts</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'blog:post_create' %}">New Post</a></li>
+                    <li><a href="{% url 'blog:profile' %}">Profile</a></li>
+                    <li><a href="{% url 'blog:logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'blog:login' %}">Login</a></li>
+                    <li><a href="{% url 'blog:register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <form method="get" action="{% url 'blog:search' %}" class="search-form">
+                        <input type="text" name="q" placeholder="Search posts..." class="search-input">
+                        <button type="submit" class="search-btn">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Django Blog. All rights reserved.</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
