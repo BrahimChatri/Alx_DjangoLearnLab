@@ -16,7 +16,7 @@ body {
 nav {
     background-color: #2c3e50;
     padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Search Bar */
@@ -170,7 +170,7 @@ main {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     text-align: center;
 }
@@ -202,13 +202,13 @@ main {
     background-color: white;
     padding: 1.5rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .post-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
 .post-card h3 {
@@ -241,7 +241,7 @@ main {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     margin: 0 auto;
 }
@@ -258,7 +258,8 @@ main {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 0.75rem;
     border: 2px solid #e9ecef;
@@ -292,7 +293,7 @@ footer {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .post-header {
@@ -337,15 +338,19 @@ footer {
     margin: 0 auto;
 }
 
-.profile-info, .profile-edit, .user-posts {
+.profile-info,
+.profile-edit,
+.user-posts {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 }
 
-.profile-info h2, .profile-edit h3, .user-posts h3 {
+.profile-info h2,
+.profile-edit h3,
+.user-posts h3 {
     color: #2c3e50;
     margin-bottom: 1rem;
 }
@@ -449,14 +454,16 @@ footer {
 }
 
 /* Search results styles */
-.search-results, .tag-posts {
+.search-results,
+.tag-posts {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.search-info, .tag-info {
+.search-info,
+.tag-info {
     background-color: #f8f9fa;
     padding: 1.5rem;
     border-radius: 8px;
@@ -464,24 +471,29 @@ footer {
     border-left: 4px solid #3498db;
 }
 
-.search-info p, .tag-info p {
+.search-info p,
+.tag-info p {
     margin-bottom: 0.5rem;
 }
 
-.search-actions, .tag-info {
+.search-actions,
+.tag-info {
     margin-top: 2rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
 }
 
-.no-results, .no-posts, .search-prompt {
+.no-results,
+.no-posts,
+.search-prompt {
     text-align: center;
     padding: 3rem;
     color: #6c757d;
 }
 
-.no-results a, .no-posts a {
+.no-results a,
+.no-posts a {
     color: #3498db;
     text-decoration: none;
 }
@@ -492,23 +504,23 @@ footer {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .nav-links {
         gap: 1rem;
     }
-    
+
     .posts-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .container {
         padding: 0 1rem;
     }
-    
+
     .form-actions {
         flex-direction: column;
     }
-    
+
     .post-navigation {
         flex-direction: column;
     }
@@ -520,7 +532,7 @@ footer {
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .comments-section h2 {
@@ -548,8 +560,24 @@ footer {
     gap: 1rem;
 }
 
+.comment-form-container .form-group {
+    margin-bottom: 1rem;
+}
+
 .comment-form-container textarea {
     min-height: 100px;
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    resize: vertical;
+}
+
+.comment-form-container textarea:focus {
+    outline: none;
+    border-color: #3498db;
 }
 
 .comment-form-container button {

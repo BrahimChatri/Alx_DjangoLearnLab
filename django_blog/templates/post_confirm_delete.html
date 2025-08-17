@@ -6,12 +6,12 @@
 <div class="container">
     <div class="form-container">
         <h1>Delete Post</h1>
-        
+
         <div class="delete-warning">
             <h2>Are you sure you want to delete "{{ object.title }}"?</h2>
             <p>This action cannot be undone. The post will be permanently removed from the blog.</p>
         </div>
-        
+
         <div class="post-preview">
             <h3>Post Details:</h3>
             <p><strong>Title:</strong> {{ object.title }}</p>
@@ -22,7 +22,7 @@
                 {{ object.content|truncatewords:50 }}
             </div>
         </div>
-        
+
         <form method="post">
             {% csrf_token %}
             <div class="form-actions">

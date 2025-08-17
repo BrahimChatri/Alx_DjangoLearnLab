@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {% if form.instance.pk %}Edit Post{% else %}Create New Post{% endif %} - Django Blog
+{% if form.instance.pk %}Edit Post{% else %}Create New Post{% endif %} - Django Blog
 {% endblock %}
 
 {% block content %}
@@ -9,38 +9,47 @@
     <div class="form-container">
         <h1>
             {% if form.instance.pk %}
-                Edit Post: {{ form.instance.title }}
+            Edit Post: {{ form.instance.title }}
             {% else %}
-                Create New Post
+            Create New Post
             {% endif %}
         </h1>
-        
+
         <form method="post">
             {% csrf_token %}
-            
+
             {% if form.errors %}
-                <div class="message error">
-                    <p>Please correct the errors below:</p>
-                    {{ form.errors }}
-                </div>
+            <div class="message error">
+                <p>Please correct the errors below:</p>
+                {{ form.errors }}
+            </div>
             {% endif %}
-            
+
             <div class="form-group">
                 <label for="{{ form.title.id_for_label }}">Title:</label>
                 {{ form.title }}
                 {% if form.title.errors %}
-                    <div class="error-message">{{ form.title.errors.0 }}</div>
+                <div class="error-message">{{ form.title.errors.0 }}</div>
                 {% endif %}
             </div>
-            
+
             <div class="form-group">
                 <label for="{{ form.content.id_for_label }}">Content:</label>
                 {{ form.content }}
                 {% if form.content.errors %}
-                    <div class="error-message">{{ form.content.errors.0 }}</div>
+                <div class="error-message">{{ form.content.errors.0 }}</div>
                 {% endif %}
             </div>
-            
+
+            <div class="form-group">
+                <label for="{{ form.tags.id_for_label }}">Tags:</label>
+                {{ form.tags }}
+                {% if form.tags.errors %}
+                <div class="error-message">{{ form.tags.errors.0 }}</div>
+                {% endif %}
+                <small class="form-help">{{ form.tags.help_text }}</small>
+            </div>
+
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">
                     {% if form.instance.pk %}Update Post{% else %}Create Post{% endif %}
