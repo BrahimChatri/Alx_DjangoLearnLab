@@ -90,7 +90,8 @@ advanced-api-project/
 │   ├── views.py             # API views with filtering and permissions
 │   ├── urls.py              # API URL patterns
 │   ├── admin.py             # Django admin configuration
-│   └── tests.py             # Comprehensive test suite
+│   ├── tests.py             # Original test suite
+│   └── test_views.py        # Comprehensive unit tests for API endpoints
 ├── requirements.txt          # Python dependencies
 └── manage.py                # Django management script
 ```
@@ -105,11 +106,30 @@ advanced-api-project/
 ## Testing
 
 The project includes comprehensive tests covering:
+- **test_views.py**: 20 comprehensive unit tests for API endpoints (as required by the task)
+- **tests.py**: 15 additional tests for extended functionality
+- **Total**: 35 tests covering all aspects of the API
+
+### Test Coverage Includes:
 - Authentication and permission checks
-- CRUD operations
+- CRUD operations (Create, Read, Update, Delete)
 - Filtering, searching, and ordering functionality
 - Error handling for invalid requests
 - Proper HTTP status codes
+- Response data integrity validation
+- Edge cases and error scenarios
+
+### Running Tests:
+```bash
+# Run all tests
+python manage.py test
+
+# Run only the comprehensive API tests
+python manage.py test api.test_views
+
+# Run original test suite
+python manage.py test api.tests
+```
 
 All tests use a separate test database to avoid impacting production data.
 
