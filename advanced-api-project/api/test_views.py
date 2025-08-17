@@ -254,3 +254,91 @@ class BookAPITests(APITestCase):
         
         # Check status code
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_login_functionality(self):
+        """Test login functionality using self.client.login."""
+        # Test login with correct credentials
+        login_success = self.client.login(username="testuser", password="pass123")
+        self.assertTrue(login_success)
+        
+        # Test login with incorrect credentials
+        login_failure = self.client.login(username="testuser", password="wrongpassword")
+        self.assertFalse(login_failure)
+        
+        # Test that we can access protected endpoints after login
+        url = reverse('book-create')
+        data = {"title": "Book via Login", "publication_year": 2022, "author": self.author.id}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_filtering_capabilities_comprehensive(self):
+        """Test comprehensive filtering capabilities for various attributes."""
+        # Test filtering by title
+        url = reverse('book-list') + '?title=Book1'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['title'], "Book1")
+        
+        # Test filtering by publication year
+        url = reverse('book-list') + '?publication_year=2021'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['publication_year'], 2021)
+        
+        # Test filtering by author name
+        url = reverse('book-list') + '?author__name=Author1'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+
+    def test_search_functionality_comprehensive(self):
+        """Test comprehensive search functionality across multiple fields."""
+        # Test search in title field
+        url = reverse('book-list') + '?search=Book'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+        
+        # Test search in author name field
+        url = reverse('book-list') + '?search=Author1'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+        
+        # Test search with partial match
+        url = reverse('book-list') + '?search=Book1'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+
+    def test_ordering_functionality_comprehensive(self):
+        """Test comprehensive ordering functionality for various fields."""
+        # Test ordering by title ascending
+        url = reverse('book-list') + '?ordering=title'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['title'], "Book1")
+        self.assertEqual(response.data[1]['title'], "Book2")
+        
+        # Test ordering by title descending
+        url = reverse('book-list') + '?ordering=-title'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['title'], "Book2")
+        self.assertEqual(response.data[1]['title'], "Book1")
+        
+        # Test ordering by publication year ascending
+        url = reverse('book-list') + '?ordering=publication_year'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['publication_year'], 2020)
+        self.assertEqual(response.data[1]['publication_year'], 2021)
+        
+        # Test ordering by publication year descending
+        url = reverse('book-list') + '?ordering=-publication_year'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['publication_year'], 2021)
+        self.assertEqual(response.data[1]['publication_year'], 2020)

@@ -106,9 +106,9 @@ advanced-api-project/
 ## Testing
 
 The project includes comprehensive tests covering:
-- **test_views.py**: 20 comprehensive unit tests for API endpoints (as required by the task)
+- **test_views.py**: 24 comprehensive unit tests for API endpoints (as required by the task)
 - **tests.py**: 15 additional tests for extended functionality
-- **Total**: 35 tests covering all aspects of the API
+- **Total**: 39 tests covering all aspects of the API
 
 ### Test Coverage Includes:
 - Authentication and permission checks
@@ -118,6 +118,10 @@ The project includes comprehensive tests covering:
 - Proper HTTP status codes
 - Response data integrity validation
 - Edge cases and error scenarios
+- Login functionality testing
+- Comprehensive filtering capabilities
+- Advanced search functionality
+- Ordering functionality for multiple fields
 
 ### Running Tests:
 ```bash
